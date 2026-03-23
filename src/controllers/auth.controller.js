@@ -38,7 +38,7 @@ export async function register(req, res) {
     html: `<p>Hi ${username}, </p> Thank you for registering at <strong>Perplexity</strong>.
      We're excited to have you on board\n\n
      <p>Please verify your email address by clicking the link below.</p>
-     <a href="${process.env.BASE_URL}/api/auth/verify-email?token=${token}">
+     <a href="https://perplexity-backend-1-rcvm.onrender.com/api/auth/verify-email?token=${token}">
      <p>if you did not create an account , please ignore this email
      <p> Best regards, \n <br> The perplexity Team.</p>  `,
   });
@@ -279,7 +279,7 @@ const html = `
     <p class="eyebrow">Success</p>
     <h1>Email Verified!</h1>
     <p>Your email has been verified successfully.<br/>You can now sign in to your account.</p>
-    <a href="https://perplexity-ai-frontend-cugn.vercel.app/login" class="btn">Go to Login →</a>
+    <a href="https://perplexity-ai-frontend-cugn.vercel.app/api/auth/login" class="btn">Go to Login →</a>
   </div>
 </body>
 </html>
