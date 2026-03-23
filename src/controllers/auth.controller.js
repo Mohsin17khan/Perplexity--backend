@@ -38,15 +38,19 @@ export async function register(req, res) {
     html: `<p>Hi ${username}, </p> Thank you for registering at <strong>Perplexity</strong>.
      We're excited to have you on board\n\n
      <p>Please verify your email address by clicking the link below.</p>
-     <a href="http://localhost:3000/api/auth/verify-email?token=${token}">Verify email </a>
+     <a href="${process.env.BASE_URL}/api/auth/verify-email?token=${token}">
      <p>if you did not create an account , please ignore this email
      <p> Best regards, \n <br> The perplexity Team.</p>  `,
   });
 
 
-  res.cookie("token", token);
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None"
+});
 
-  res.status(201).json({
+  res.status(200).json({
     message: "User created successfully.",
     success: true,
     user: {
@@ -92,8 +96,11 @@ export async function login(req, res) {
     { expiresIn: "7d" },
   );
 
-  res.cookie("token", token);
-
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None"
+});
   res.status(200).json({
     message: "User login successfully.",
     user: {
@@ -272,7 +279,7 @@ const html = `
     <p class="eyebrow">Success</p>
     <h1>Email Verified!</h1>
     <p>Your email has been verified successfully.<br/>You can now sign in to your account.</p>
-    <a href="http://localhost:5173/login" class="btn">Go to Login →</a>
+    <a href="https://perplexity-ai-frontend-cugn.vercel.app/login" class="btn">Go to Login →</a>
   </div>
 </body>
 </html>
@@ -291,7 +298,11 @@ const html = `
 
 
 export async function logout(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None"
+});
 
   res.status(200).json({
     success: true,
