@@ -11,7 +11,7 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://perplexity-ai-frontend-cugn.vercel.app",
     credentials: true,
     methods:["GET", "POST", "PUT", "DELETE"]
 }));
