@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@getbrevo/brevo": "^5.0.1",
     "@langchain/core": "^1.1.33",
     "@langchain/google-genai": "^2.1.26",
     "@langchain/mistralai": "^1.0.7",
