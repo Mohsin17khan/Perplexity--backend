@@ -1,5 +1,5 @@
 // import nodemailer from 'nodemailer'
-import * as Brevo from '@getbrevo/brevo';
+import brevo from '@getbrevo/brevo';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -8,7 +8,7 @@ dotenv.config();
 
 const client = new Brevo.TransactionalEmailsApi();
 client.setApiKey(
-    Brevo.TransactionalEmailsApiApiKeys.apiKey,
+    brevo.TransactionalEmailsApiApiKeys.apiKey,
     process.env.BREVO_API_KEY
 );
 
