@@ -35,12 +35,42 @@ export async function register(req, res) {
   await sendEmail({
     to: email,
     subject: "Welcome to perplexity",
-    html: `<p>Hi ${username}, </p> Thank you for registering at <strong>Perplexity</strong>.
-     We're excited to have you on board\n\n
-     <p>Please verify your email address by clicking the link below.</p>
-     <a href="https://perplexity-backend-1-rcvm.onrender.com/api/auth/verify-email?token=${token}"> </a>
-     <p>if you did not create an account , please ignore this email
-     <p> Best regards, \n <br> The perplexity Team.</p>  `,
+     html: `
+    <!DOCTYPE html>
+    <html>
+    <body style="background:#0C0C0C;font-family:'DM Sans',sans-serif;padding:40px 20px;margin:0;">
+      <div style="max-width:480px;margin:0 auto;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:20px;padding:40px 32px;text-align:center;">
+        
+        <div style="font-size:48px; margin-bottom:20px;">✉️</div>
+        
+        <h1 style="font-size:22px;font-weight:800;color:#f4f4f5;margin-bottom:8px;">
+          Verify your email
+        </h1>
+        
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:28px;">
+          Hi <strong style="color:#f4f4f5;">${username}</strong>, thank you for registering at 
+          <strong style="color:#14b8a6;">Perplexity</strong>.<br/>
+          Click the button below to verify your email address.
+        </p>
+
+        <a href="https://perplexity-backend-1-rcvm.onrender.com/api/auth/verify-email?token=${token}"
+          style="display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#3b82f6);color:#fff;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:0.05em;">
+          Verify Email →
+        </a>
+
+        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:28px;line-height:1.6;">
+          If you did not create an account, please ignore this email.<br/>
+          This link expires in 7 days.
+        </p>
+
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:16px;">
+          — The Perplexity Team 
+        </p>
+        <small className="text-gray-700 text-[10px]">@mohsin-khan</small>
+      </div>
+    </body>
+    </html>
+    `,
   });
 
 
