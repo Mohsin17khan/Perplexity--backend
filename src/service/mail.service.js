@@ -1,8 +1,10 @@
 import nodemailer from 'nodemailer'
 import dotenv from "dotenv";
+import { Resend } from 'resend';
 
 dotenv.config();
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // transporter is web server ko SMTP server s connect build kar ta hai communicate karta hai for SMTP server email 
 // bhj sake
@@ -27,16 +29,17 @@ transporter.verify()
 })
 
 
-export async function sendEmail({ to, subject, html, text }){
-    const mailOptions = {
-      from: process.env.GOOGLE_USER, // sender address
-      to, // list of receivers
-      subject, // Subject line
-      html, // html body
-      text // plain text body
+
+export async function sendEmail({ to, subject, html }) {
+    try {
+        const data = await resend.emails.send({
+            from: 'Perplexity <onboarding@resend.dev>', // ← use this until you verify a domain
+            to,
+            subject,
+            html,
+        });
+        console.log("✅ Email sent:", data);
+    } catch (err) {
+        console.error("❌ Email failed:", err.message);
     }
-
-
-    const details = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", details)
 }
