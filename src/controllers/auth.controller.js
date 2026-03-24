@@ -32,10 +32,12 @@ export async function register(req, res) {
     { expiresIn: "7d" },
   );
 
-  await sendEmail({
-    to: email,
-    subject: "Welcome to perplexity",
-     html: `
+
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Welcome to perplexity",
+      html: `
     <!DOCTYPE html>
     <html>
     <body style="background:#0C0C0C;font-family:'DM Sans',sans-serif;padding:40px 20px;margin:0;">
@@ -66,12 +68,17 @@ export async function register(req, res) {
         <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:16px;">
           — The Perplexity Team 
         </p>
-        <small className="text-gray-700 text-[10px]">@mohsin-khan</small>
+        <small style="color:gray;font-size:10px;">@mohsin-khan</small>
       </div>
     </body>
     </html>
     `,
-  });
+    });
+    
+  } catch (error) {
+     console.log("Email failed:", error.message);
+  }
+  
 
 
   res.cookie("token", token, {
@@ -83,7 +90,6 @@ export async function register(req, res) {
   res.status(200).json({
     message: "User created successfully.",
     success: true,
-    token,
     user: {
       id: user._id,
       username: user.username,
@@ -134,7 +140,6 @@ export async function login(req, res) {
 });
   res.status(200).json({
     message: "User login successfully.",
-    token,
     user: {
       id:user._id,
       username: user.username,
@@ -163,7 +168,14 @@ export async function getme(req, res) {
 
 export async function verifyEmail(req, res) {
   const { token } = req.query;
-  const decode = JWT.verify(token, process.env.TOKEN_SECRET);
+  let decode;
+   try {
+  decode = JWT.verify(token, process.env.TOKEN_SECRET);
+} catch (err) {
+  return res.status(400).json({
+    message: "Invalid token",
+  });
+}
 
   try {
     const user = await userModel.findOne({ username: decode.username });
